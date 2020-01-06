@@ -11,6 +11,23 @@ window.Shop = {
             Shop.displayProducts(response.content);
         });
     },
+
+    addProductToCart: function(productId){
+        var request = {
+            //todo: take customer id dynamically somehow
+           customerId: 30,
+           productId: productId
+        };
+
+        $.ajax({
+            url: Shop.API_BASE_URL + "/carts",
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(request)
+        }).done(function () {
+            window.location.replace("cart.html")
+        })
+    },
     
     getProductHtml: function (product) {
         return `<div class="col-md-3 col-sm-6">
@@ -37,7 +54,7 @@ window.Shop = {
         products.forEach(oneProduct => productsHtml += Shop.getProductHtml(oneProduct));
 
         $(".single-product-area .row:first-child").html(productsHtml);
-        //:nth-child(3) example
+        //:nth-child(3) example - 3 child
     }
 };
 
