@@ -12,11 +12,11 @@ window.Shop = {
         });
     },
 
-    addProductToCart: function(productId){
+    addProductToCart: function (productId) {
         var request = {
             //todo: take customer id dynamically somehow
-           customerId: 30,
-           productId: productId
+            customerId: 30,
+            productId: productId
         };
 
         $.ajax({
@@ -28,7 +28,7 @@ window.Shop = {
             window.location.replace("cart.html")
         })
     },
-    
+
     getProductHtml: function (product) {
         return `<div class="col-md-3 col-sm-6">
                 <div class="single-shop-product">
@@ -55,7 +55,19 @@ window.Shop = {
 
         $(".single-product-area .row:first-child").html(productsHtml);
         //:nth-child(3) example - 3 child
-    }
+    },
+
+    bindEvents: function() {
+
+    $(".single-product-area").delegate(".add_to_cart_button", "click", function (event) {
+        event.preventDefault();
+
+        let productId = $(this).data("product_id");
+
+        Shop.addProductToCart(productId);
+    })
+}
 };
 
 Shop.getProducts();
+Shop.bindEvents();
